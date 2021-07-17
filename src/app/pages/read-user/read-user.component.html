@@ -4,93 +4,91 @@
   </mat-toolbar>
   <div class="table-container">
     <div class="button">
-      <button
-        mat-raised-button
-        color="primary"
-        [routerLink]="['/create-user']"
-        routerLinkActive="router-link-active"
-      >
+      <button mat-raised-button color="primary" [routerLink]="['/create-user']">
         <mat-icon aria-label="plus">add</mat-icon>
         Create User
       </button>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-      <!-- S.No Column -->
-      <ng-container matColumnDef="sno">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>S.No</th>
-        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-      </ng-container>
+    <ng-container *ngIf="dataSource && dataSource.data.length == 0">
+      <h3 style="text-align: center;">NO RECORDS FOUND...</h3>
+    </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.name }}
-        </td>
-      </ng-container>
+    <ng-container *ngIf="dataSource && dataSource.data.length > 0">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8"
+        matSort
+      >
+        <!-- S.No Column -->
+        <ng-container matColumnDef="sno">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>S.No</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
 
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-      </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.name }}
+          </td>
+        </ng-container>
 
-      <!-- CreatedAt Column -->
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef>CreatedAt</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.createdAt | date: "medium" }}
-        </td>
-      </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+        </ng-container>
 
-      <!-- UpdatedAt Column -->
-      <ng-container matColumnDef="updatedAt">
-        <th mat-header-cell *matHeaderCellDef>UpdatedAt</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.updatedAt | date: "medium" }}
-        </td>
-      </ng-container>
+        <!-- CreatedAt Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>CreatedAt</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.createdAt | date: "medium" }}
+          </td>
+        </ng-container>
 
-      <!-- Update Column -->
-      <ng-container matColumnDef="update">
-        <th mat-header-cell *matHeaderCellDef>Update</th>
-        <td mat-cell *matCellDef="let element">
-          <button
-            mat-icon-button
-            color="accent"
-            [routerLink]="['/update-user/', element._id]"
-            routerLinkActive="router-link-active"
-          >
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+        <!-- UpdatedAt Column -->
+        <ng-container matColumnDef="updatedAt">
+          <th mat-header-cell *matHeaderCellDef>UpdatedAt</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.updatedAt | date: "medium" }}
+          </td>
+        </ng-container>
 
-      <!-- Delete Column -->
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef>Delete</th>
-        <td mat-cell *matCellDef="let element">
-          <button
-            mat-icon-button
-            color="warn"
-            (click)="deleteUser(element._id)"
-          >
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+        <!-- Update Column -->
+        <ng-container matColumnDef="update">
+          <th mat-header-cell *matHeaderCellDef>Update</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              color="accent"
+              [routerLink]="['/update-user/', element._id]"
+              routerLinkActive="router-link-active"
+            >
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-    <mat-card
-      *ngIf="isLoading"
-      style="display: flex; justify-content: center; align-items: center"
-    >
-      <mat-progress-spinner color="primary" mode="indeterminate">
-      </mat-progress-spinner>
-    </mat-card>
+        <!-- Delete Column -->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef>Delete</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteUser(element._id)"
+            >
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </ng-container>
   </div>
 </section>

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../../services/user.service';
 import { User } from './../../models/user';
@@ -13,9 +11,6 @@ import { DeleteUserComponent } from './../delete-user/delete-user.component';
   styleUrls: ['./read-user.component.scss'],
 })
 export class ReadUserComponent implements OnInit {
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   isLoading = true;
   displayedColumns: string[] = [
     'sno',
@@ -40,8 +35,7 @@ export class ReadUserComponent implements OnInit {
         console.log('users=>>', data);
         this.isLoading = false;
         this.dataSource = new MatTableDataSource(data.results);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        console.log(this.dataSource)
       },
       (error: any) => {
         this.isLoading = false;
