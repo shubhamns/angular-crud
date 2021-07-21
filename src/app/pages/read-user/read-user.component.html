@@ -10,9 +10,12 @@
       </button>
     </div>
 
-    <ng-container *ngIf="dataSource && dataSource.data.length == 0">
-      <h3 style="text-align: center;">NO RECORDS FOUND...</h3>
-    </ng-container>
+    <h3 *ngIf="isLoading" style="text-align: center">LOADING...</h3>
+    <h3 *ngIf="!isLoading" style="text-align: center">
+      <ng-container *ngIf="dataSource && dataSource.data.length == 0">
+        NO RECORDS FOUND...
+      </ng-container>
+    </h3>
 
     <ng-container *ngIf="dataSource && dataSource.data.length > 0">
       <table
