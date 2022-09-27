@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://node-express-app-api.herokuapp.com',
+  API_URL: '',
 };
 
 /*
