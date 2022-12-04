@@ -9,6 +9,8 @@ import { UserService } from './../../services/user.service';
   styleUrls: ['./delete-user.component.scss'],
 })
 export class DeleteUserComponent implements OnInit {
+  apiError: string = 'Something went wrong.';
+
   constructor(
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<any>,
@@ -36,7 +38,7 @@ export class DeleteUserComponent implements OnInit {
       },
       (error: any) => {
         console.log('error=>>', error);
-        this.openSnackBar(error.message, 'error');
+        this.openSnackBar(error.message || this.apiError, 'error');
       }
     );
   }
